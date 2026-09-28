@@ -1,0 +1,18 @@
+# Local configuration and secrets
+.env
+.env.local
+platform/.env
+platform/web/.env
+platform/cms/.env
+
+# Installed packages, generated output, and local database files
+node_modules/
+**/node_modules/
+.npm-cache/
+dist/
+platform/web/.next/
+platform/cms/.payload/
+*.log
+
+# Earlier visual experiment; the platform directory is the actual MEA27 app
+legacy-visual-prototype/

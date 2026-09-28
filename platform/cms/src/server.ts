@@ -1,0 +1,52 @@
+import express from "express";
+import payload from "payload";
+import { authenticateUser } from "./middleware";
+import nodemailer from "nodemailer";
+
+const port = 3001;
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require("dotenv").config();
+const app = express();
+
+const hasEmailCredentials = Boolean(
+	process.env.SENDER_EMAIL && process.env.PASSKEY,
+);
+const email = {
+	fromName: "CMS Admin",
+	fromAddress: process.env.SENDER_EMAIL || "cms@localhost",
+	transport: hasEmailCredentials
+		? nodemailer.createTransport({
+				service: "gmail",
+				auth: {
+					user: process.env.SENDER_EMAIL,
+					pass: process.env.PASSKEY,
+				},
+			})
+		: nodemailer.createTransport({ jsonTransport: true }),
+};
+
+// Redirect root to Admin panel
+app.get(`${process.env.PAYLOAD_PUBLIC_BASE_PATH}`, (_, res) => {
+	res.redirect(`${process.env.PAYLOAD_PUBLIC_BASE_PATH}/admin`);
+});
+
+app.use(authenticateUser);
+
+const start = async () => {
+	// Initialize Payload
+	await payload.init({
+		secret: process.env.PAYLOAD_SECRET,
+		express: app,
+		onInit: async () => {
+			payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`);
+		},
+		email,
+	});
+
+	app.listen(port, () =>
+		payload.logger.info(`Server running at http://localhost:${port}`),
+	);
+};
+
+start();
