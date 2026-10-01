@@ -3,6 +3,7 @@ import "./globals.css";
 import Providers from "@utils/providers";
 import MotionBackground from "@components/Common/MotionBackground";
 import MoodLift from "@components/Common/MoodLift";
+import SceneTransition from "@components/Common/SceneTransition";
 
 export const metadata: Metadata = {
 	title: "MEA | NIT Trichy",
@@ -18,7 +19,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body>
 				<MotionBackground />
-				<Providers>{children}<MoodLift /></Providers>
+				<Providers>{children}<MoodLift /><SceneTransition /></Providers>
 			</body>
 		</html>
 	);

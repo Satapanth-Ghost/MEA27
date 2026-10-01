@@ -1,6 +1,7 @@
 import { getUser } from "@/actions/user";
 import { getGoodToKnow } from "@/actions/cms";
 import Navigation from "@components/Landing/Navigation";
+import SectionFrame from "@components/Common/SectionFrame";
 
 export default async function Page() {
 	const user = await getUser();
@@ -8,11 +9,8 @@ export default async function Page() {
 	return (
 		<>
 			<Navigation isUser={user !== undefined} />
-			<div className="text-white mea-video-page flex flex-col items-center h-screen w-screen overflow-y-auto px-2 py-10">
-				<div className="text-4xl font-bold mb-10 mt-16 underline pointer-events-none font-montserrat">
-					GOOD TO KNOW
-				</div>
-				<div className="w-full px-12 lg:px-20 space-y-6">
+			<SectionFrame index="04" kicker="MEA '27 / FIELD NOTES" title="GOOD TO KNOW">
+				<div className="space-y-6">
 					<div
 						className="lexical-content font-montserrat"
 						dangerouslySetInnerHTML={{
@@ -23,7 +21,7 @@ export default async function Page() {
 						}}
 					/>
 				</div>
-			</div>
+			</SectionFrame>
 		</>
 	);
 }

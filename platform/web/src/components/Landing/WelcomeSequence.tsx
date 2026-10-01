@@ -4,7 +4,13 @@ import { useEffect, useState } from "react";
 
 export default function WelcomeSequence() {
 	const [phase, setPhase] = useState<"intro" | "break" | "done">("intro");
+	const [isLeaving, setIsLeaving] = useState(false);
 	const joke = "We don’t have trust issues. We have tolerance limits.";
+	const finishSequence = () => {
+		if (isLeaving) return;
+		setIsLeaving(true);
+		window.setTimeout(() => setPhase("done"), 680);
+	};
 
 	useEffect(() => {
 		if (phase !== "intro") return;
@@ -14,7 +20,7 @@ export default function WelcomeSequence() {
 
 	useEffect(() => {
 		if (phase !== "break") return;
-		const finishTimer = window.setTimeout(() => setPhase("done"), 6400);
+		const finishTimer = window.setTimeout(finishSequence, 6400);
 		return () => {
 			window.clearTimeout(finishTimer);
 		};
@@ -24,7 +30,7 @@ export default function WelcomeSequence() {
 
 	if (phase === "break") {
 		return (
-			<section className="mea-mech-break" aria-label="Mechanical engineering intermission">
+			<section className={`mea-mech-break ${isLeaving ? "mea-welcome-leaving" : ""}`} aria-label="Mechanical engineering intermission">
 				<video className="mea-mech-break-video" autoPlay muted loop playsInline preload="auto">
 					<source src="/media/mech-break.mp4" type="video/mp4" />
 				</video>
@@ -34,14 +40,14 @@ export default function WelcomeSequence() {
 					<div className="mea-mech-break-badge">⚙</div>
 					<p className="mea-mech-break-joke">{joke}</p>
 					<div className="mea-mech-break-meter"><i /><i /><i /><i /></div>
-					<button onClick={() => setPhase("done")}>SKIP TO MEA ’27 ↗</button>
+					<button onClick={finishSequence}>SKIP TO MEA ’27 ↗</button>
 				</div>
 			</section>
 		);
 	}
 
 	return (
-		<div className="mea-welcome" role="dialog" aria-label="Welcome to MEA 27">
+		<div className={`mea-welcome ${isLeaving ? "mea-welcome-leaving" : ""}`} role="dialog" aria-label="Welcome to MEA 27">
 			<video className="mea-welcome-video" autoPlay muted loop playsInline preload="auto" aria-hidden="true">
 				<source src="/media/welcome-motion.mp4" type="video/mp4" />
 			</video>

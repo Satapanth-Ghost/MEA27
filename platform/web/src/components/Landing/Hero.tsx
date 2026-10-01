@@ -1,4 +1,4 @@
-import Link from "next/link";
+import MorphLink from "@components/Common/MorphLink";
 
 export default async function Hero(props: { isUser: boolean }) {
 	return (
@@ -17,8 +17,8 @@ export default async function Hero(props: { isUser: boolean }) {
 				<h1 className="mea-hero-enter mea-delay-2 mt-6 max-w-5xl font-outfit text-[clamp(4rem,10vw,10rem)] font-semibold leading-[.76] tracking-[-.085em]">BUILD<br />WHAT&apos;S <span className="font-serif font-normal italic text-[#7ff2da]">NEXT.</span></h1>
 				<p className="mea-hero-enter mea-delay-3 mt-9 max-w-xl font-montserrat text-base leading-8 text-slate-100 sm:text-xl">Where curious minds become formidable engineers. Learn deeper, build together, and turn possibility into momentum.</p>
 				<div className="mea-hero-enter mea-delay-4 mt-10 flex flex-wrap gap-4">
-					<Link href={props.isUser ? "/study" : "/login"} className="bg-[#ff5c3d] px-6 py-4 font-montserrat text-xs font-bold tracking-[.08em] transition hover:-translate-y-1 hover:bg-[#ff765d]">{props.isUser ? "OPEN STUDY HUB  →" : "LOGIN WITH DAUTH  →"}</Link>
-					<Link href="#highlights" className="border border-white/60 px-6 py-4 font-montserrat text-xs font-bold tracking-[.08em] transition hover:bg-white hover:text-[#06141e]">EXPLORE MEA ↗</Link>
+					<MorphLink href={props.isUser ? "/study" : "/login"} sceneLabel={props.isUser ? "STUDY MATERIALS" : "LOGIN"} className="bg-[#ff5c3d] px-6 py-4 font-montserrat text-xs font-bold tracking-[.08em] transition hover:-translate-y-1 hover:bg-[#ff765d]">{props.isUser ? "OPEN STUDY HUB  →" : "LOGIN WITH DAUTH  →"}</MorphLink>
+					<a href="#highlights" className="border border-white/60 px-6 py-4 font-montserrat text-xs font-bold tracking-[.08em] transition hover:bg-white hover:text-[#06141e]">EXPLORE MEA ↗</a>
 				</div>
 				<div className="mea-hero-enter mea-delay-5 mt-14 flex items-center gap-4 font-montserrat text-[10px] font-bold tracking-[.22em] text-[#7ff2da]"><span className="mea-pulse-line h-px w-12 bg-[#7ff2da]" />SCROLL TO IGNITE</div>
 			</div>
